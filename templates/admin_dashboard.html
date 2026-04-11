@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Admin Dashboard | Nexus Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #f1f5f9;
+            padding: 1.5rem;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .title-section h1 {
+            font-size: 1.875rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .title-section p {
+            color: #94a3b8;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 0.5rem 1.25rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #22d3ee;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            padding: 0.5rem 1.25rem;
+            border-radius: 2rem;
+            color: #fca5a5;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .logout-btn:hover {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        /* Table wrapper (responsive) */
+        .table-wrapper {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-x: auto;
+            padding: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem 0.75rem;
+            color: #22d3ee;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        td {
+            padding: 1rem 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .badge-warning {
+            background: rgba(234, 179, 8, 0.2);
+            color: #fde047;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .btn-verify {
+            color: #4ade80;
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .btn-verify:hover {
+            background: #22c55e;
+            color: black;
+        }
+
+        .btn-delete {
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .btn-delete:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        .request-details {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 0.25rem;
+            display: block;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #64748b;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            th, td {
+                font-size: 0.75rem;
+                padding: 0.5rem;
+            }
+            .stat-card {
+                padding: 0.25rem 0.75rem;
+            }
+            .stat-number {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <div class="title-section">
+            <h1><i class="fas fa-chart-line"></i> Project Dashboard</h1>
+            <p>Manage client requests, verify payments, and track projects</p>
+        </div>
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">{{ requests|length }}</div>
+                <div class="stat-label">Total Requests</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ requests|selectattr('payment_verified', 'equalto', True)|list|length }}</div>
+                <div class="stat-label">Verified</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ requests|selectattr('payment_verified', 'equalto', False)|list|length }}</div>
+                <div class="stat-label">Pending</div>
+            </div>
+        </div>
+        <a href="/admin/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Client</th>
+                    <th>Plan</th>
+                    <th>Transaction ID</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in requests %}
+                <tr>
+                    <td style="font-weight: 600;">#{{ req.id }}</td>
+                    <td>
+                        <strong>{{ req.name }}</strong><br>
+                        <span class="request-details">{{ req.email }} | {{ req.phone }}</span>
+                    </td>
+                    <td>{{ req.plan }}</td>
+                    <td>
+                        <code style="font-size: 0.7rem; background: rgba(0,0,0,0.4); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">{{ req.transaction_id }}</code>
+                    </td>
+                    <td>
+                        {% if req.payment_verified %}
+                            <span class="badge badge-success"><i class="fas fa-check-circle"></i> Verified</span>
+                        {% else %}
+                            <span class="badge badge-warning"><i class="fas fa-clock"></i> Pending</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            {% if not req.payment_verified %}
+                            <button onclick="verifyPayment({{ req.id }})" class="btn-icon btn-verify" title="Verify Payment">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            {% endif %}
+                            <button onclick="deleteRequest({{ req.id }})" class="btn-icon btn-delete" title="Delete Request">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="background: rgba(255,255,255,0.02);">
+                    <td colspan="6" style="padding: 0.5rem 0.75rem; font-size: 0.75rem; color: #94a3b8;">
+                        <i class="fas fa-comment"></i> <strong>Project details:</strong> {{ req.description }}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>No project requests yet.</p>
+                        <p style="font-size: 0.75rem;">Clients will appear here after submitting the form.</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    async function verifyPayment(id) {
+        if (confirm('Mark this payment as verified? This will confirm the project and the client will be notified.')) {
+            try {
+                const response = await fetch(`/admin/verify-payment/${id}`, { method: 'POST' });
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Verification failed. Please try again.');
+                }
+            } catch (err) {
+                alert('Network error.');
+            }
+        }
+    }
+
+    async function deleteRequest(id) {
+        if (confirm('⚠️ Delete this request permanently? This action cannot be undone.')) {
+            try {
+                const response = await fetch(`/admin/delete-request/${id}`, { method: 'POST' });
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Delete failed.');
+                }
+            } catch (err) {
+                alert('Network error.');
+            }
+        }
+    }
+</script>
+</body>
+</html>

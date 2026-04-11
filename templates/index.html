@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Nexus Studio | Modern Portfolio & Web Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #3b0764 50%, #0f172a 100%);
+            color: white;
+            scroll-behavior: smooth;
+        }
+        /* Glass Navigation */
+        .glass-nav {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            width: 90%;
+            max-width: 64rem;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 9999px;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #22d3ee, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .nav-links { display: none; gap: 2rem; }
+        @media (min-width: 768px) { .nav-links { display: flex; } }
+        .nav-links a { color: white; text-decoration: none; transition: color 0.2s; }
+        .nav-links a:hover { color: #22d3ee; }
+        .book-btn {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            cursor: pointer;
+        }
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding-top: 5rem;
+        }
+        .blob {
+            position: absolute;
+            width: 18rem;
+            height: 18rem;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            animation: pulse 4s infinite;
+        }
+        .blob-1 { top: 5rem; left: 2rem; background: #9333ea; }
+        .blob-2 { bottom: 5rem; right: 2rem; background: #0891b2; animation-delay: 1s; }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.05); }
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #22d3ee, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .btn-primary {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #06b6d4, #7e22ce);
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+        .btn-primary:hover { transform: scale(1.05); }
+        .btn-outline {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(255,255,255,0.3);
+            text-decoration: none;
+            color: white;
+        }
+        .btn-outline:hover { background: rgba(255,255,255,0.1); }
+        /* Sections */
+        .section { padding: 6rem 1.5rem; max-width: 80rem; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 4rem; }
+        .section-title span { color: #22d3ee; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.875rem; }
+        .section-title h2 { font-size: 2.5rem; font-weight: bold; margin-top: 0.5rem; }
+        .title-underline {
+            width: 6rem;
+            height: 0.25rem;
+            background: linear-gradient(90deg, #22d3ee, #a855f7);
+            margin: 1rem auto 0;
+            border-radius: 9999px;
+        }
+        /* Cards */
+        .grid-3 {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: 1fr;
+        }
+        @media (min-width: 768px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+        .card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+        .card:hover { border-color: #22d3ee; transform: translateY(-4px); }
+        .card-img { height: 14rem; background: linear-gradient(135deg, #6366f1, #9333ea); }
+        .card-content { padding: 1.5rem; }
+        .card-title { font-size: 1.5rem; font-weight: bold; }
+        .card-text { color: #d1d5db; margin-top: 0.5rem; }
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: 1fr;
+        }
+        @media (min-width: 768px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); } }
+        .pricing-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.2s;
+            position: relative;
+        }
+        .pricing-card:hover { transform: scale(1.02); }
+        .popular {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(168,85,247,0.2));
+            border-color: #22d3ee;
+        }
+        .popular-badge {
+            position: absolute;
+            top: -0.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #06b6d4;
+            color: black;
+            padding: 0.25rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .price { font-size: 2.5rem; font-weight: bold; margin-top: 1rem; }
+        .price span { font-size: 1rem; font-weight: normal; }
+        .feature-list { margin-top: 1.5rem; list-style: none; }
+        .feature-list li { margin: 0.75rem 0; }
+        .feature-list i { color: #22d3ee; margin-right: 0.5rem; }
+        .plan-btn {
+            width: 100%;
+            margin-top: 2rem;
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .plan-btn-primary {
+            background: #06b6d4;
+            color: black;
+            font-weight: bold;
+        }
+        .plan-btn-primary:hover { background: #0891b2; }
+        .plan-btn:hover { background: #22d3ee; color: black; }
+        /* Form */
+        .form-container {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        @media (min-width: 768px) { .form-container { padding: 3rem; } }
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+        @media (min-width: 1024px) { .form-grid { flex-direction: row; } }
+        .form-fields { flex: 1; display: flex; flex-direction: column; gap: 1.25rem; }
+        input, select, textarea {
+            width: 100%;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: white;
+            outline: none;
+        }
+        input:focus, select:focus, textarea:focus { border-color: #22d3ee; }
+        .payment-box {
+            background: rgba(0,0,0,0.4);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border: 1px solid #22d3ee;
+        }
+        .qr-img {
+            width: 10rem;
+            height: 10rem;
+            margin: 1rem auto;
+            background: white;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, #06b6d4, #9333ea);
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            font-size: 1.125rem;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: #9ca3af; }
+        @media (max-width: 768px) {
+            .section-title h2 { font-size: 1.875rem; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="glass-nav">
+    <div class="logo">NEXUS</div>
+    <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#work">Work</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#request">Start Project</a>
+    </div>
+    <div class="book-btn" ><i class="fab fa-gripfire"></i> Book Now</div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div>
+        <h1 class="hero-title" style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">Crafting <span class="gradient-text">Digital Legends</span></h1>
+        <p style="font-size: 1.25rem; color: #cbd5e1; max-width: 42rem; margin: 1rem auto;">We don't just build websites — we engineer experiences that convert, inspire, and dominate.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+            <a href="#request" class="btn-primary">Launch Your Idea <i class="fas fa-arrow-right"></i></a>
+            <a href="#work" class="btn-outline">Explore Work</a>
+        </div>
+    </div>
+</section>
+
+<!-- Work Section -->
+<section id="work" class="section">
+    <div class="section-title">
+        <span>Portfolio</span>
+        <h2>Featured Creations</h2>
+        <div class="title-underline"></div>
+    </div>
+   <div class="grid-3">
+    <!-- Card 1 - Fintech Dashboard -->
+    <a href="https://projecttriowise.vercel.app/" target="_blank" class="project-card" style="text-decoration: none; display: block;">
+    <div class="card-img">
+        <img src="https://static/images/1stpro.jpg" alt="Triowise E-Commerce Platform" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+    <div class="card-content">
+        <h3 class="card-title">Triowise E-Commerce</h3>
+        <p class="card-text">Intelligent Multi-Vendor E-Commerce Platform</p>
+    </div>
+</a>
+
+    <!-- Card 2 - AI Marketplace -->
+    <a href="https://your-link-2.com" target="_blank" class="card" style="text-decoration: none; display: block;">
+        <div class="card-img">
+            <img src="https://your-image-url-2.jpg" alt="AI Marketplace" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="card-content">
+            <h3 class="card-title">AI Marketplace</h3>
+            <p class="card-text">Next-gen e‑commerce solution</p>
+        </div>
+    </a>
+
+    <!-- Card 3 - Luxury Brand -->
+    <a href="https://your-link-3.com" target="_blank" class="card" style="text-decoration: none; display: block;">
+        <div class="card-img">
+            <img src="https://your-image-url-3.jpg" alt="Luxury Brand" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="card-content">
+            <h3 class="card-title">Luxury Brand</h3>
+            <p class="card-text">Immersive storytelling experience</p>
+        </div>
+    </a>
+</div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing" class="section">
+    <div class="section-title">
+        <span>Investment</span>
+        <h2>Simple, transparent pricing</h2>
+        <div class="title-underline"></div>
+    </div>
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <h3 style="font-size: 1.5rem; font-weight: bold;">Essential</h3>
+            <div class="price">$299<span>/project</span></div>
+            <ul class="feature-list">
+                <li><i class="fas fa-check-circle"></i> 5 Pages Responsive</li>
+                <li><i class="fas fa-check-circle"></i> SEO Optimized</li>
+                <li><i class="fas fa-check-circle"></i> Contact Form</li>
+            </ul>
+            <button class="plan-btn" data-plan="Essential">Choose Plan</button>
+        </div>
+        <div class="pricing-card popular">
+            <div class="popular-badge">POPULAR</div>
+            <h3 style="font-size: 1.5rem; font-weight: bold;">Standard</h3>
+            <div class="price">$599<span>/project</span></div>
+            <ul class="feature-list">
+                <li><i class="fas fa-check-circle"></i> 15 Pages + CMS</li>
+                <li><i class="fas fa-check-circle"></i> E‑commerce Ready</li>
+                <li><i class="fas fa-check-circle"></i> Performance Optimization</li>
+            </ul>
+            <button class="plan-btn plan-btn-primary" data-plan="Standard">Choose Plan</button>
+        </div>
+        <div class="pricing-card">
+            <h3 style="font-size: 1.5rem; font-weight: bold;">Enterprise</h3>
+            <div class="price">Custom</div>
+            <ul class="feature-list">
+                <li><i class="fas fa-check-circle"></i> Unlimited Pages</li>
+                <li><i class="fas fa-check-circle"></i> AI Integrations</li>
+                <li><i class="fas fa-check-circle"></i> Dedicated Support</li>
+            </ul>
+            <button class="plan-btn" data-plan="Enterprise">Contact Us</button>
+        </div>
+    </div>
+</section>
+
+<!-- Project Request + Payment -->
+<section id="request" class="section">
+    <div class="form-container">
+        <h2 style="font-size: 2rem; font-weight: bold; text-align: center;">Start Your Vision</h2>
+        <p style="text-align: center; color: #cbd5e1; margin: 0.5rem 0 2rem;">Advanced payment required via UPI/GPay. After submission, admin verifies and builds your website.</p>
+        <div class="form-grid">
+            <div class="form-fields">
+                <form id="projectForm" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                    <div style="display: grid; gap: 1rem; grid-template-columns: 1fr 1fr;">
+                        <input type="text" id="name" placeholder="Full Name" required>
+                        <input type="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    <input type="tel" id="phone" placeholder="Phone Number" required>
+                    <select id="project_type">
+                        <option value="Business">Business Website</option>
+                        <option value="Ecommerce">E‑commerce Store</option>
+                        <option value="Portfolio">Portfolio / Creative</option>
+                        <option value="Custom">Custom Web App</option>
+                    </select>
+                    <select id="plan">
+                        <option value="Essential">Essential ($299)</option>
+                        <option value="Standard">Standard ($599)</option>
+                        <option value="Enterprise">Enterprise (Custom)</option>
+                    </select>
+                    <textarea id="description" rows="4" placeholder="Tell us about your project requirements..."></textarea>
+                    <div class="payment-box">
+                        <p style="font-weight: bold; color: #22d3ee;"><i class="fab fa-google-pay"></i> Advanced Payment (One-time)</p>
+                        <p style="font-size: 0.875rem;">Scan QR code or use UPI ID: <code style="background: black; padding: 0.2rem 0.5rem; border-radius: 0.5rem;">nexus@okhdfcbank</code> (demo). Pay exact amount based on plan.</p>
+                        <div class="qr-img">
+                            <i class="fas fa-qrcode" style="font-size: 4rem; color: black;"></i>
+                        </div>
+                        <input type="text" id="transaction_id" placeholder="Payment Transaction ID (UPI Ref No.)" required>
+                        <p style="font-size: 0.75rem; color: #9ca3af;">After payment, enter transaction ID and submit. Admin will verify within 24h.</p>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Request & Pay</button>
+                </form>
+                <div id="formMessage" style="margin-top: 1rem; text-align: center; display: none;"></div>
+            </div>
+            <div style="flex: 1; background: rgba(255,255,255,0.05); border-radius: 1rem; padding: 1.5rem;">
+                <h3 style="font-size: 1.5rem; font-weight: bold;">How it works</h3>
+                <ul style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <li><span style="color: #22d3ee; font-size: 1.25rem; font-weight: bold;">1.</span> Choose your plan & fill details</li>
+                    <li><span style="color: #22d3ee; font-size: 1.25rem; font-weight: bold;">2.</span> Make advanced payment via GPay/UPI QR</li>
+                    <li><span style="color: #22d3ee; font-size: 1.25rem; font-weight: bold;">3.</span> Submit transaction ID</li>
+                    <li><span style="color: #22d3ee; font-size: 1.25rem; font-weight: bold;">4.</span> Admin verifies payment & starts development</li>
+                    <li><span style="color: #22d3ee; font-size: 1.25rem; font-weight: bold;">5.</span> Receive your unique website within 7 days</li>
+                </ul>
+                <div style="margin-top: 2rem; background: rgba(6,182,212,0.1); padding: 1rem; border-radius: 0.75rem; border: 1px solid #22d3ee;">
+                    <i class="fas fa-shield-alt" style="color: #22d3ee;"></i> 100% secure, refund if not satisfied.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <a href="/admin/login" class="text-white/50 hover:text-white text-sm ml-4">
+    <i class="fas fa-lock"></i>
+</a>
+    <p>© 2026 NEXUS Studio — Future-forward web creations.</p>
+</footer>
+
+<script>
+    // Plan selection from pricing cards
+    document.querySelectorAll('.plan-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const plan = btn.getAttribute('data-plan');
+            if (plan) {
+                const planSelect = document.getElementById('plan');
+                if (planSelect) planSelect.value = plan;
+                document.getElementById('request').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // Form submission
+    const form = document.getElementById('projectForm');
+    const messageDiv = document.getElementById('formMessage');
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                project_type: document.getElementById('project_type').value,
+                plan: document.getElementById('plan').value,
+                description: document.getElementById('description').value,
+                transaction_id: document.getElementById('transaction_id').value
+            };
+            if (!formData.transaction_id) {
+                alert('Please enter the payment transaction ID after making payment.');
+                return;
+            }
+            const submitBtn = form.querySelector('.submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Submitting...';
+            try {
+                const response = await fetch('/submit-request', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                const result = await response.json();
+                messageDiv.style.display = 'block';
+                messageDiv.className = result.success ? 'text-green-400' : 'text-red-400';
+                messageDiv.innerText = result.message;
+                if (result.success) form.reset();
+                setTimeout(() => { messageDiv.style.display = 'none'; }, 5000);
+            } catch (err) {
+                alert('Network error. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Submit Request & Pay';
+            }
+        });
+    }
+</script>
+</body>
+</html>
